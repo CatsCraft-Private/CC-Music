@@ -121,15 +121,15 @@ public abstract class SongPlayer {
                             if(SongPlayer.this.tick > SongPlayer.this.song.getLength()) {
                                 SongPlayer.this.playing = false;
                                 SongPlayer.this.tick = -1;
+                                for (String s : SongPlayer.this.playerList) {
+                                    Player p = Bukkit.getPlayerExact(s);
+                                    if (p != null) {
+                                        Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Song has ended");
+                                    }
+                                }
                                 SongEndEvent event = new SongEndEvent(SongPlayer.this);
                                 Bukkit.getPluginManager().callEvent(event);
                                 if(SongPlayer.this.autoDestroy) {
-                                    for (String s : SongPlayer.this.playerList) {
-                                        Player p = Bukkit.getPlayerExact(s);
-                                        if (p != null) {
-                                            Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Song has ended");
-                                        }
-                                    }
                                     SongPlayer.this.destroy();
                                     return;
                                 }
