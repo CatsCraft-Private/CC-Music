@@ -8,9 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import simple.brainsynder.api.ItemMaker;
-import simple.brainsynder.storage.*;
 
 import java.util.*;
 
@@ -56,7 +54,7 @@ class MusicGUI implements Listener {
             songMap.put(item, song);
             inv.addItem(item);
         }
-        
+
         playerSongMap.put(player.getUniqueId(), songMap);
         inv.setItem(49, Main.plugin.getStopItem());
         player.openInventory(inv);

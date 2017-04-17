@@ -5,7 +5,6 @@ import java.util.*;
 
 import com.xxmicloxx.NoteBlockAPI.*;
 import org.bukkit.*;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +32,7 @@ public class Main extends JavaPlugin {
         } catch (IOException ignored) {
         }
         File[] files = folder.listFiles();
-        if (files.length == 0) {
+        if ((files == null) || (files.length == 0)) {
             saveResource("songs/Boom Clap.nbs", true);
             saveResource("songs/Cat_s In the Cradle.nbs", true);
             saveResource("songs/Dynamite.nbs", true);
@@ -43,6 +42,7 @@ public class Main extends JavaPlugin {
         }
 
         ArrayList<Song> songs = new ArrayList<>();
+        assert files != null;
         for (File file : files) {
             if (!file.getName().endsWith("nbs")) continue;
             songs.add(NBSDecoder.parse(file));
