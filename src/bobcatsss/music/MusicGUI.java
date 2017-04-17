@@ -4,6 +4,7 @@ import com.xxmicloxx.NoteBlockAPI.Song;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +25,8 @@ class MusicGUI implements Listener {
             36, 37, 38, 39, 40, 41, 42, 43, 44
     );
 
-    static Inventory open(int page) {
+    static void open(Player player, int page) {
+        pageMap.put(player.getUniqueId(), page);
         Inventory inv = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('&', "&2Music"));
         int placeHolder = inv.getSize();
         while (placeHolder > 0) {
@@ -46,12 +48,14 @@ class MusicGUI implements Listener {
             inv.setItem(45, maker.create());
         }
 
-        ItemStack StopMusic = new ItemStack(Material.BARRIER);
-        ItemMeta StopMusicMeta = StopMusic.getItemMeta();
-        StopMusicMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&8[&cStop Music&8]"));
-        StopMusic.setItemMeta(StopMusicMeta);
-        inv.setItem(49, StopMusic);
-        return inv;
+        for (Song song : Main.songs.getPage(page)) {
+            ItemMaker maker = new ItemMaker(Material.GOLD_RECORD);
+            maker.setName(song.getTitle());
+            ItemStack item = maker.create();
+            songMap.put(item, song);
+        }
+
+        inv.setItem(49, Main.plugin.getStopItem());
     }
 }
 
