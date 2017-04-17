@@ -8,12 +8,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class MusicGUI implements Listener {
+class MusicGUI implements Listener {
 			
-		public static Inventory getInventory() {
-			
+		static Inventory getInventory() {
 			Inventory GUI = Bukkit.createInventory(null, 27, ChatColor.translateAlternateColorCodes('*', "*2Music"));
-			
+
 			ItemStack Thirteen = new ItemStack(Material.GOLD_RECORD);
 			ItemMeta ThirteenMeta = Thirteen.getItemMeta();
 			ThirteenMeta.setDisplayName(ChatColor.translateAlternateColorCodes('*', "*8[*613*8]"));
