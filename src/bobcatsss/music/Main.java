@@ -13,7 +13,7 @@ import simple.brainsynder.utils.ObjectPager;
 public class Main extends JavaPlugin {
 	public static Main plugin;
 	ObjectPager<Song> musicList;
-    Map<Player, SongPlayer> songPlayerMap = new HashMap<>();
+        Map<Player, SongPlayer> songPlayerMap = new HashMap<>();
 
 	public void onEnable() {
 		plugin = this;
