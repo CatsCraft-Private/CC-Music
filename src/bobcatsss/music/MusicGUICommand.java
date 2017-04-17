@@ -19,7 +19,7 @@ public class MusicGUICommand implements CommandExecutor {
 				p.openInventory(MusicGUI.open(0));
 				return true;
 			}
-			
+
 			if (args[0].equalsIgnoreCase("reload")) {
 			    Main.songs = Main.plugin.reloadSongs(MusicGUI.slots.size());
 			    return true;
