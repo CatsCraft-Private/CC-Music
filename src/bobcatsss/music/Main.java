@@ -26,7 +26,7 @@ public class Main extends JavaPlugin {
     /**
      * This method makes sure that an infinite number of NBS songs can be added.
      */
-    ObjectPager<Song> reloadSongs(int size) {
+    public ObjectPager<Song> reloadSongs(int size) {
         File folder = new File(getDataFolder().toString() + "/songs/");
         if (!folder.exists()) try {
             folder.createNewFile();
@@ -51,7 +51,7 @@ public class Main extends JavaPlugin {
         return new ObjectPager<>(size, songs);
     }
 
-    ItemStack getStopItem() {
+    public ItemStack getStopItem() {
         ItemStack StopMusic = new ItemStack(Material.BARRIER);
         ItemMeta StopMusicMeta = StopMusic.getItemMeta();
         StopMusicMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&8[&cStop Music&8]"));
