@@ -6,11 +6,30 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
 
 public class GUIClickEvent implements Listener {
+
+    @EventHandler
+    public void onLeave (PlayerQuitEvent e) {
+        Player p = e.getPlayer();
+        if (Main.plugin.songPlayerMap.containsKey(p.getUniqueId())) {
+            Main.plugin.songPlayerMap.get(p.getUniqueId()).destroy();
+            Main.plugin.songPlayerMap.remove(p.getUniqueId());
+        }
+    }
+
+    @EventHandler
+    public void onLeave (PlayerKickEvent e) {
+        Player p = e.getPlayer();
+        if (Main.plugin.songPlayerMap.containsKey(p.getUniqueId())) {
+            Main.plugin.songPlayerMap.get(p.getUniqueId()).destroy();
+            Main.plugin.songPlayerMap.remove(p.getUniqueId());
+        }
+    }
 
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
