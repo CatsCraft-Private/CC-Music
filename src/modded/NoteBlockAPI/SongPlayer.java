@@ -14,7 +14,7 @@ public abstract class SongPlayer {
     protected Song song;
     protected boolean playing = false;
     protected short tick = -1;
-    protected ArrayList<String> playerList = new ArrayList<> ();
+    protected ArrayList<String> playerList = new ArrayList<>();
     protected boolean autoDestroy = false;
     protected boolean destroyed = false;
     protected Thread playerThread;
@@ -75,15 +75,15 @@ public abstract class SongPlayer {
     }
 
     protected void calculateFade() {
-        if(this.fadeDone != this.fadeDuration) {
-            double targetVolume = Interpolator.interpolateLinear(new double[]{0.0D, (double)this.fadeStart, (double)this.fadeDuration, (double)this.fadeTarget}, (double)this.fadeDone);
-            this.setVolume((byte)((int)targetVolume));
+        if (this.fadeDone != this.fadeDuration) {
+            double targetVolume = Interpolator.interpolateLinear(new double[]{0.0D, (double) this.fadeStart, (double) this.fadeDuration, (double) this.fadeTarget}, (double) this.fadeDone);
+            this.setVolume((byte) ((int) targetVolume));
             ++this.fadeDone;
         }
     }
 
-    private String formatHHMMSS(long secondsCount){
-        int seconds = (int) (secondsCount %60);
+    private String formatHHMMSS(long secondsCount) {
+        int seconds = (int) (secondsCount % 60);
         secondsCount -= seconds;
         long minutesCount = secondsCount / 60;
         long minutes = minutesCount % 60;
@@ -101,55 +101,53 @@ public abstract class SongPlayer {
     protected void createThread() {
         this.playerThread = new Thread(new Runnable() {
             public void run() {
-                while(!SongPlayer.this.destroyed) {
+                while (!SongPlayer.this.destroyed) {
                     long startTime = System.currentTimeMillis();
                     SongPlayer var3 = SongPlayer.this;
-                    synchronized(SongPlayer.this) {
-                        if(SongPlayer.this.playing) {
-                            SongPlayer.this.calculateFade();
-                            ++SongPlayer.this.tick;
-                            int time = SongPlayer.this.tick;
-                            int seconds = (time/20);
-                            int hours = seconds / 3600;
-                            int minutes = (seconds % 3600) / 60;
+                    if (SongPlayer.this.playing) {
+                        SongPlayer.this.calculateFade();
+                        ++SongPlayer.this.tick;
+                        int time = SongPlayer.this.tick;
+                        int seconds = (time / 20);
+                        int hours = seconds / 3600;
+                        int minutes = (seconds % 3600) / 60;
+                        for (String s : SongPlayer.this.playerList) {
+                            Player p = Bukkit.getPlayerExact(s);
+                            if (p != null) {
+                                Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Time Elasped: §7" + formatHHMMSS(seconds));
+                            }
+                        }
+                        if (SongPlayer.this.tick > SongPlayer.this.song.getLength()) {
+                            SongPlayer.this.playing = false;
+                            SongPlayer.this.tick = -1;
                             for (String s : SongPlayer.this.playerList) {
                                 Player p = Bukkit.getPlayerExact(s);
                                 if (p != null) {
-                                    Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Time Elasped: §7" + formatHHMMSS(seconds));
+                                    Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Song has ended");
                                 }
                             }
-                            if(SongPlayer.this.tick > SongPlayer.this.song.getLength()) {
-                                SongPlayer.this.playing = false;
-                                SongPlayer.this.tick = -1;
-                                for (String s : SongPlayer.this.playerList) {
-                                    Player p = Bukkit.getPlayerExact(s);
-                                    if (p != null) {
-                                        Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Song has ended");
-                                    }
-                                }
-                                SongEndEvent event = new SongEndEvent(SongPlayer.this);
-                                Bukkit.getPluginManager().callEvent(event);
-                                if(SongPlayer.this.autoDestroy) {
-                                    SongPlayer.this.destroy();
-                                    return;
-                                }
+                            if (SongPlayer.this.autoDestroy) {
+                                SongPlayer.this.destroy();
+                                return;
                             }
+                        }
 
-                            for (String s : SongPlayer.this.playerList) {
-                                Player p = Bukkit.getPlayerExact(s);
-                                if (p != null) {
-                                    SongPlayer.this.playTick(p, SongPlayer.this.tick);
-                                }
+                        for (String s : SongPlayer.this.playerList) {
+                            Player p = Bukkit.getPlayerExact(s);
+                            if (p != null) {
+                                SongPlayer.this.playTick(p, SongPlayer.this.tick);
                             }
                         }
                     }
 
+
                     long duration = System.currentTimeMillis() - startTime;
                     int delayMillis = SongPlayer.this.song.getDelay() * 50;
-                    if(duration < (long)delayMillis) {
+                    if (duration < (long) delayMillis) {
                         try {
-                            Thread.sleep((long)delayMillis - duration);
-                        } catch (InterruptedException ignored) {}
+                            Thread.sleep((long) delayMillis - duration);
+                        } catch (InterruptedException ignored) {
+                        }
                     }
                 }
 
@@ -164,45 +162,32 @@ public abstract class SongPlayer {
     }
 
     public void addPlayer(Player p) {
-        synchronized(this) {
-            if(!this.playerList.contains(p.getName())) {
-                this.playerList.add(p.getName());
-                ArrayList<SongPlayer> songs = Main.plugin.playingSongs.get(p.getName());
-                if(songs == null) {
-                    songs = new ArrayList<>();
-                }
-
-                songs.add(this);
-                Main.plugin.playingSongs.put(p.getName(), songs);
+        if (!this.playerList.contains(p.getName())) {
+            this.playerList.add(p.getName());
+            ArrayList<SongPlayer> songs = Main.plugin.playingSongs.get(p.getName());
+            if (songs == null) {
+                songs = new ArrayList<>();
             }
 
+            songs.add(this);
+            Main.plugin.playingSongs.put(p.getName(), songs);
         }
     }
 
     public void setAutoDestroy(boolean value) {
-        synchronized(this) {
-            this.autoDestroy = value;
-        }
+        this.autoDestroy = value;
     }
 
     public boolean getAutoDestroy() {
-        synchronized(this) {
-            return this.autoDestroy;
-        }
+        return this.autoDestroy;
     }
 
     public abstract void playTick(Player var1, int var2);
 
     public void destroy() {
-        synchronized(this) {
-            SongDestroyingEvent event = new SongDestroyingEvent(this);
-            Bukkit.getPluginManager().callEvent(event);
-            if(!event.isCancelled()) {
-                this.destroyed = true;
-                this.playing = false;
-                this.setTick((short)-1);
-            }
-        }
+        this.destroyed = true;
+        this.playing = false;
+        this.setTick((short) -1);
     }
 
     public boolean isPlaying() {
@@ -211,11 +196,6 @@ public abstract class SongPlayer {
 
     public void setPlaying(boolean playing) {
         this.playing = playing;
-        if(!playing) {
-            SongStoppedEvent event = new SongStoppedEvent(this);
-            Bukkit.getPluginManager().callEvent(event);
-        }
-
     }
 
     public short getTick() {
@@ -227,18 +207,13 @@ public abstract class SongPlayer {
     }
 
     public void removePlayer(Player p) {
-        synchronized(this) {
-            this.playerList.remove(p.getName());
-            if(Main.plugin.playingSongs.get(p.getName()) != null) {
-                ArrayList<SongPlayer> songs = new ArrayList<> (Main.plugin.playingSongs.get(p.getName()));
-                songs.remove(this);
-                Main.plugin.playingSongs.put(p.getName(), songs);
-                if(this.playerList.isEmpty() && this.autoDestroy) {
-                    SongEndEvent event = new SongEndEvent(this);
-                    Bukkit.getPluginManager().callEvent(event);
-                    this.destroy();
-                }
-
+        this.playerList.remove(p.getName());
+        if (Main.plugin.playingSongs.get(p.getName()) != null) {
+            ArrayList<SongPlayer> songs = new ArrayList<>(Main.plugin.playingSongs.get(p.getName()));
+            songs.remove(this);
+            Main.plugin.playingSongs.put(p.getName(), songs);
+            if (this.playerList.isEmpty() && this.autoDestroy) {
+                this.destroy();
             }
         }
     }
