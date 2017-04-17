@@ -25,7 +25,7 @@ public class GUIClickEvent implements Listener {
 			ItemStack clicked = e.getCurrentItem();
 			ItemMeta clickedMeta = clicked.getItemMeta();
 
-			if (clickedMeta.hasDisplayName() == false) {
+			if (!clickedMeta.hasDisplayName()) {
 				return;
 			}
 			
