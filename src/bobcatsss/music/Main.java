@@ -14,7 +14,7 @@ import simple.brainsynder.utils.ObjectPager;
 public class Main extends JavaPlugin {
     static Main plugin;
     static ObjectPager<Song> songs;
-    Map<Player, SongPlayer> songPlayerMap = new HashMap<>();
+    Map<UUID, SongPlayer> songPlayerMap = new HashMap<>();
 
     public void onEnable() {
         plugin = this;
@@ -23,6 +23,9 @@ public class Main extends JavaPlugin {
         songs = reloadSongs(MusicGUI.slots.size());
     }
 
+    /**
+     * This method makes sure that an infinite number of NBS songs can be added.
+     */
     ObjectPager<Song> reloadSongs(int size) {
         File folder = new File(getDataFolder().toString() + "/songs/");
         if (!folder.exists()) try {
