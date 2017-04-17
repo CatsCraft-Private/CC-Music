@@ -21,6 +21,10 @@ public class MusicGUICommand implements CommandExecutor {
 			}
 
 			if (args[0].equalsIgnoreCase("reload")) {
+			    if (!p.isOp()) {
+                    MusicGUI.open(p, 1);
+			        return true;
+                }
 			    Main.songs = Main.plugin.reloadSongs(MusicGUI.slots.size());
 			    return true;
             }
