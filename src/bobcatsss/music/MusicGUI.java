@@ -15,9 +15,9 @@ import simple.brainsynder.storage.*;
 import java.util.*;
 
 class MusicGUI implements Listener {
-    static Map<ItemStack, Song> songMap = new HashMap<>();
-    static Map<UUID, Integer> pageMap = new HashMap<>();
-    static List<Integer> slots = Arrays.asList(
+    public static Map<UUID, Map<ItemStack, Song>> playerSongMap = new HashMap<>();
+    public static Map<UUID, Integer> pageMap = new HashMap<>();
+    public static List<Integer> slots = Arrays.asList(
             0, 1, 2, 3, 4, 5, 6, 7, 8,
             9, 10, 11, 12, 13, 14, 15, 16, 17,
             18, 19, 20, 21, 22, 23, 24, 25, 26,
@@ -25,7 +25,7 @@ class MusicGUI implements Listener {
             36, 37, 38, 39, 40, 41, 42, 43, 44
     );
 
-    static void open(Player player, int page) {
+    public static void open(Player player, int page) {
         pageMap.put(player.getUniqueId(), page);
         Inventory inv = Bukkit.createInventory(new InvHolder(), 54, ChatColor.translateAlternateColorCodes('&', "&2Music"));
         int placeHolder = inv.getSize();
@@ -48,6 +48,7 @@ class MusicGUI implements Listener {
             inv.setItem(45, maker.create());
         }
 
+        Map<ItemStack, Song> songMap = new HashMap<>();
         for (Song song : Main.songs.getPage(page)) {
             ItemMaker maker = new ItemMaker(Material.GOLD_RECORD);
             maker.setName(song.getTitle());
@@ -55,7 +56,8 @@ class MusicGUI implements Listener {
             songMap.put(item, song);
             inv.addItem(item);
         }
-
+        
+        playerSongMap.put(player.getUniqueId(), songMap);
         inv.setItem(49, Main.plugin.getStopItem());
         player.openInventory(inv);
     }
