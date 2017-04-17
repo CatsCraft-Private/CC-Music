@@ -1,13 +1,12 @@
 package bobcatsss.music;
 
-import com.xxmicloxx.NoteBlockAPI.*;
+import modded.NoteBlockAPI.*;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 

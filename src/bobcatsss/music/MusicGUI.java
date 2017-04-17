@@ -1,6 +1,6 @@
 package bobcatsss.music;
 
-import com.xxmicloxx.NoteBlockAPI.Song;
+import modded.NoteBlockAPI.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

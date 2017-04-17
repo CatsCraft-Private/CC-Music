@@ -3,8 +3,9 @@ package bobcatsss.music;
 import java.io.*;
 import java.util.*;
 
-import com.xxmicloxx.NoteBlockAPI.*;
+import modded.NoteBlockAPI.*;
 import org.bukkit.*;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -57,5 +58,37 @@ public class Main extends JavaPlugin {
         StopMusicMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&8[&cStop Music&8]"));
         StopMusic.setItemMeta(StopMusicMeta);
         return StopMusic;
+    }
+
+
+    public HashMap<String, ArrayList<modded.NoteBlockAPI.SongPlayer>> playingSongs = new HashMap<>();
+    public HashMap<String, Byte> playerVolume = new HashMap<>();
+
+    public static boolean isReceivingSong(Player p) {
+        return plugin.playingSongs.get(p.getName()) != null && !((ArrayList)plugin.playingSongs.get(p.getName())).isEmpty();
+    }
+
+    public static void stopPlaying(Player p) {
+        if(plugin.playingSongs.get(p.getName()) != null) {
+
+            for (modded.NoteBlockAPI.SongPlayer s : (plugin.playingSongs.get(p.getName()))) {
+                s.removePlayer(p);
+            }
+
+        }
+    }
+
+    public static void setPlayerVolume(Player p, byte volume) {
+        plugin.playerVolume.put(p.getName(), volume);
+    }
+
+    public static byte getPlayerVolume(Player p) {
+        Byte b = (Byte)plugin.playerVolume.get(p.getName());
+        if(b == null) {
+            b = (byte)100;
+            plugin.playerVolume.put(p.getName(), b);
+        }
+
+        return b;
     }
 }
