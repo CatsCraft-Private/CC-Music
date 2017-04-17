@@ -10,7 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 	static Main plugin;
     HashMap<Player, Sound> pmusic = new HashMap<>();
-	
+
+    // This is a Test
 	public void onEnable() {
 		plugin = this;
 		Bukkit.getPluginManager().registerEvents(new GUIClickEvent(), this);
