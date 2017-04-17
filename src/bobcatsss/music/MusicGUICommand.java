@@ -16,7 +16,7 @@ public class MusicGUICommand implements CommandExecutor {
 			}
 			Player p = (Player)sender;
 			if(args.length == 0) {
-				MusicGUI.open(p, 0);
+				MusicGUI.open(p, 1);
 				return true;
 			}
 
