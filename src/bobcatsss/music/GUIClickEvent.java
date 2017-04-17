@@ -9,7 +9,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-class GUIClickEvent implements Listener {
+import java.util.Map;
+
+public class GUIClickEvent implements Listener {
 
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
@@ -49,13 +51,14 @@ class GUIClickEvent implements Listener {
                     }
                 }
             }
-
-            if (MusicGUI.songMap.containsKey(e.getCurrentItem())) {
+            if (!MusicGUI.playerSongMap.containsKey (p.getUniqueId())) return;
+            Map<ItemStack, Song> songMap = MusicGUI.playerSongMap.get(p.getUniqueId());
+            if (songMap.containsKey(e.getCurrentItem())) {
                 if (Main.plugin.songPlayerMap.containsKey(p.getUniqueId())) {
                     Main.plugin.songPlayerMap.get(p.getUniqueId()).destroy();
                     Main.plugin.songPlayerMap.remove(p.getUniqueId());
                 }
-                Song song = MusicGUI.songMap.get(e.getCurrentItem());
+                Song song = songMap.get(e.getCurrentItem());
                 SongPlayer player = new RadioSongPlayer(song);
                 player.addPlayer(p);
                 player.setPlaying(true);
