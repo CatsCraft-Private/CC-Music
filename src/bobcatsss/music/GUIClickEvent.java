@@ -35,8 +35,7 @@ public class GUIClickEvent implements Listener {
 	public void onClick(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
         int page = 0;
-        if (MusicGUI.pageMap.containsKey(p.getUniqueId()))
-            page = MusicGUI.pageMap.get(p.getUniqueId());
+        if (MusicGUI.pageMap.containsKey(p.getUniqueId())) page = MusicGUI.pageMap.get(p.getUniqueId());
 		if (e.getView().getTopInventory().getHolder() instanceof InvHolder) {
 		    if (e.getCurrentItem() == null) return;
 			e.setCancelled(true);
@@ -69,6 +68,7 @@ public class GUIClickEvent implements Listener {
                     }
                 }
             }
+
             if (!MusicGUI.playerSongMap.containsKey (p.getUniqueId())) return;
             Map<ItemStack, Song> songMap = MusicGUI.playerSongMap.get(p.getUniqueId());
             if (songMap.containsKey(e.getCurrentItem())) {
@@ -80,8 +80,6 @@ public class GUIClickEvent implements Listener {
                 SongPlayer player = new RadioSongPlayer(song);
                 p.sendMessage("§8[§aMusic§8] §3Now Playing: §7" + song.getTitle());
                 player.addPlayer(p);
-                player.setPlaying();
-                player.setAutoDestroy(true);
                 Main.plugin.songPlayerMap.put(p.getUniqueId(), player);
             }
 		}

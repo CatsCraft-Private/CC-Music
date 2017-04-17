@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import simple.brainsynder.api.ItemMaker;
 import simple.brainsynder.utils.ObjectPager;
 
 public class Main extends JavaPlugin {
@@ -58,12 +59,18 @@ public class Main extends JavaPlugin {
         return new ObjectPager<>(size, songs);
     }
 
+    public ItemStack getStopItem(String current) {
+        ItemMaker maker = new ItemMaker(Material.BARRIER);
+        maker.setName("&8[&cStop Music&8]");
+        if (current != null) {
+            maker.addLoreLine("Currently Playing:");
+            maker.addLoreLine(current);
+        }
+        return maker.create();
+    }
+
     public ItemStack getStopItem() {
-        ItemStack StopMusic = new ItemStack(Material.BARRIER);
-        ItemMeta StopMusicMeta = StopMusic.getItemMeta();
-        StopMusicMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&8[&cStop Music&8]"));
-        StopMusic.setItemMeta(StopMusicMeta);
-        return StopMusic;
+        return getStopItem(null);
     }
 
 

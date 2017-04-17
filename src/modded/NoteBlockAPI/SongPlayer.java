@@ -38,6 +38,10 @@ public abstract class SongPlayer {
         }
     }
 
+    public Song getSong () {
+        return song;
+    }
+
     private String formatHHMMSS(long secondsCount) {
         int seconds = (int) (secondsCount % 60);
         secondsCount -= seconds;
