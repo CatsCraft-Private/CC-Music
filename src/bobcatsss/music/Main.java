@@ -21,7 +21,7 @@ public class Main extends JavaPlugin {
         getCommand("music").setExecutor(new MusicGUICommand());
         songs = reloadSongs(MusicGUI.slots.size());
     }
- 
+
     ObjectPager<Song> reloadSongs(int size) {
         File folder = new File(getDataFolder().toString() + "/songs/");
         if (!folder.exists()) try {
