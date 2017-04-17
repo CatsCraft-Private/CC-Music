@@ -31,32 +31,32 @@ public class GUIClickEvent implements Listener {
 			
 			if (clickedMeta.getDisplayName().equals(ChatColor.translateAlternateColorCodes('*', "*8[*613*8]"))) {
 				if (Main.plugin.pmusic.containsKey(p)) {
-					p.stopSound(Main.plugin.pmusic.get(p));
-					p.playSound(p.getLocation(), Sound.RECORD_13, Integer.MAX_VALUE, 1);
-					Main.plugin.pmusic.put(p, Sound.RECORD_13);
+					//p.stopSound(Main.plugin.pmusic.get(p));
+					//p.playSound(p.getLocation(), Sound.RECORD_13, Integer.MAX_VALUE, 1);
+					//Main.plugin.pmusic.put(p, Sound.RECORD_13);
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&aMusic&8] &3Now playing &613"));
 					p.closeInventory();
 					return;
 				}
-				p.playSound(p.getLocation(), Sound.RECORD_13, Integer.MAX_VALUE, 1);
+				//p.playSound(p.getLocation(), Sound.RECORD_13, Integer.MAX_VALUE, 1);
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&aMusic&8] &3Now playing &613"));
-				Main.plugin.pmusic.put(p, Sound.RECORD_13);
+				//Main.plugin.pmusic.put(p, Sound.RECORD_13);
 				p.closeInventory();
 				return;
 			}
 			
 			if (clickedMeta.getDisplayName().equals(ChatColor.translateAlternateColorCodes('*', "*8[*611*8]"))) {
 				if (Main.plugin.pmusic.containsKey(p)) {
-					p.stopSound(Main.plugin.pmusic.get(p));
-					p.playSound(p.getLocation(), Sound.RECORD_11, Integer.MAX_VALUE, 1);
-					Main.plugin.pmusic.put(p, Sound.RECORD_11);
+					//p.stopSound(Main.plugin.pmusic.get(p));
+					//p.playSound(p.getLocation(), Sound.RECORD_11, Integer.MAX_VALUE, 1);
+					//Main.plugin.pmusic.put(p, Sound.RECORD_11);
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&aMusic&8] &3Now playing &611"));
 					p.closeInventory();
 					return;
 				}
-				p.playSound(p.getLocation(), Sound.RECORD_11, Integer.MAX_VALUE, 1);
+				//p.playSound(p.getLocation(), Sound.RECORD_11, Integer.MAX_VALUE, 1);
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&aMusic&8] &3Now playing &611"));
-				Main.plugin.pmusic.put(p, Sound.RECORD_11);
+				//Main.plugin.pmusic.put(p, Sound.RECORD_11);
 				p.closeInventory();
 				return;
 			}
@@ -64,7 +64,7 @@ public class GUIClickEvent implements Listener {
 			if (clickedMeta.getDisplayName()
 					.equals(ChatColor.translateAlternateColorCodes('*', "*8[*cStop Music*8]"))) {
 				if (Main.plugin.pmusic.containsKey(p)) {
-					p.stopSound(Main.plugin.pmusic.get(p));
+					//p.stopSound(Main.plugin.pmusic.get(p));
 					Main.plugin.pmusic.remove(p);
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&aMusic&8] &3Music has been stopped"));
 					p.closeInventory();
