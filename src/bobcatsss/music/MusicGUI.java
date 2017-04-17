@@ -6,8 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 import simple.brainsynder.api.ItemMaker;
 
 import java.util.*;
@@ -50,6 +49,15 @@ class MusicGUI implements Listener {
         for (Song song : Main.songs.getPage(page)) {
             ItemMaker maker = new ItemMaker(Material.GOLD_RECORD);
             maker.setName(song.getTitle());
+            maker.addLoreLine("Length: " + song.getLength() + " seconds");
+            maker.setFlags(
+                    ItemFlag.HIDE_ATTRIBUTES,
+                    ItemFlag.HIDE_DESTROYS,
+                    ItemFlag.HIDE_ENCHANTS,
+                    ItemFlag.HIDE_PLACED_ON,
+                    ItemFlag.HIDE_POTION_EFFECTS,
+                    ItemFlag.HIDE_UNBREAKABLE
+            );
             ItemStack item = maker.create();
             songMap.put(item, song);
             inv.addItem(item);

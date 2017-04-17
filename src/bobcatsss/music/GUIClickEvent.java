@@ -59,6 +59,7 @@ public class GUIClickEvent implements Listener {
                 }
                 Song song = songMap.get(e.getCurrentItem());
                 SongPlayer player = new RadioSongPlayer(song);
+                p.sendMessage("§8[§aMusic§8] §3Now Playing: §7" + song.getTitle());
                 player.addPlayer(p);
                 player.setPlaying(true);
                 player.setAutoDestroy(true);
