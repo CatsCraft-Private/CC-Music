@@ -27,7 +27,7 @@ class MusicGUI implements Listener {
 
     static void open(Player player, int page) {
         pageMap.put(player.getUniqueId(), page);
-        Inventory inv = Bukkit.createInventory(null, 54, ChatColor.translateAlternateColorCodes('&', "&2Music"));
+        Inventory inv = Bukkit.createInventory(new InvHolder(), 54, ChatColor.translateAlternateColorCodes('&', "&2Music"));
         int placeHolder = inv.getSize();
         while (placeHolder > 0) {
             if (!slots.contains((placeHolder - 1))) {
