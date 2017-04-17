@@ -12,9 +12,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import simple.brainsynder.utils.ObjectPager;
 
 public class Main extends JavaPlugin {
-    static Main plugin;
-    static ObjectPager<Song> songs;
-    Map<UUID, SongPlayer> songPlayerMap = new HashMap<>();
+    public static Main plugin;
+    public static ObjectPager<Song> songs;
+    public Map<UUID, SongPlayer> songPlayerMap = new HashMap<>();
 
     public void onEnable() {
         plugin = this;
