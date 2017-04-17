@@ -34,12 +34,12 @@ public class Main extends JavaPlugin {
         }
         File[] files = folder.listFiles();
         if (files.length == 0) {
-            saveResource("/songs/Boom Clap.nbs", true);
-            saveResource("/songs/Cat_s In the Cradle.nbs", true);
-            saveResource("/songs/Dynamite.nbs", true);
-            saveResource("/songs/GangnamStyle.nbs", true);
-            saveResource("/songs/Payphone.nbs", true);
-            saveResource("/songs/Problem.nbs", true);
+            saveResource("songs/Boom Clap.nbs", true);
+            saveResource("songs/Cat_s In the Cradle.nbs", true);
+            saveResource("songs/Dynamite.nbs", true);
+            saveResource("songs/GangnamStyle.nbs", true);
+            saveResource("songs/Payphone.nbs", true);
+            saveResource("songs/Problem.nbs", true);
         }
 
         ArrayList<Song> songs = new ArrayList<>();
