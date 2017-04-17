@@ -47,11 +47,21 @@ class MusicGUI implements Listener {
 
         Map<ItemStack, Song> songMap = new HashMap<>();
         for (Song song : Main.songs.getPage(page)) {
+            if (song == null) {
+                ItemMaker error = new ItemMaker(Material.BARRIER);
+                error.setName("Could not load data for ");
+                inv.addItem(error.create());
+                continue;
+            }
             ItemMaker maker = new ItemMaker(Material.GOLD_RECORD);
             try {
                 maker.setName(song.getTitle());
             }catch (Exception e) {
-                maker.setName(song.getPath().getName().replace(".nbs", "").replace(".NBS", ""));
+                try {
+                    maker.setName(song.getPath().getName().replace(".nbs", "").replace(".NBS", ""));
+                }catch (Exception ex) {
+                    maker.setName("Missing Song Name");
+                }
             }
             maker.addLoreLine("Length: " + song.getLength() + " seconds");
             maker.setFlags(
