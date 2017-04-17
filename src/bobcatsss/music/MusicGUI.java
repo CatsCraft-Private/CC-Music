@@ -48,7 +48,11 @@ class MusicGUI implements Listener {
         Map<ItemStack, Song> songMap = new HashMap<>();
         for (Song song : Main.songs.getPage(page)) {
             ItemMaker maker = new ItemMaker(Material.GOLD_RECORD);
-            maker.setName(song.getTitle());
+            try {
+                maker.setName(song.getTitle());
+            }catch (Exception e) {
+                maker.setName(song.getPath().getName().replace(".nbs", "").replace(".NBS", ""));
+            }
             maker.addLoreLine("Length: " + song.getLength() + " seconds");
             maker.setFlags(
                     ItemFlag.HIDE_ATTRIBUTES,
