@@ -4,9 +4,10 @@ import java.io.*;
 import java.util.*;
 
 import com.xxmicloxx.NoteBlockAPI.*;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import simple.brainsynder.utils.ObjectPager;
 
@@ -26,7 +27,8 @@ public class Main extends JavaPlugin {
         File folder = new File(getDataFolder().toString() + "/songs/");
         if (!folder.exists()) try {
             folder.createNewFile();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
         File[] files = folder.listFiles();
         if (files.length == 0) {
             saveResource("/songs/Boom Clap.nbs", true);
@@ -44,5 +46,13 @@ public class Main extends JavaPlugin {
         }
 
         return new ObjectPager<>(size, songs);
+    }
+
+    ItemStack getStopItem() {
+        ItemStack StopMusic = new ItemStack(Material.BARRIER);
+        ItemMeta StopMusicMeta = StopMusic.getItemMeta();
+        StopMusicMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&8[&cStop Music&8]"));
+        StopMusic.setItemMeta(StopMusicMeta);
+        return StopMusic;
     }
 }
