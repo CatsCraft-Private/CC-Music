@@ -1,7 +1,7 @@
 name: Music
 authors: [brainsynder, bobcatsss]
 version: 1.0
-depends: [SimpleAPI]
+depends: [SimpleAPI,NoteBlockAPI]
 main: bobcatsss.music.Main
 commands:
    music:
