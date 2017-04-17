@@ -33,7 +33,7 @@ public class Main extends JavaPlugin {
         } catch (IOException ignored) {
         }
         File[] files = folder.listFiles();
-        if ((files == null) || (files.length == 0)) {
+        if (files.length == 0) {
             saveResource("songs/Boom Clap.nbs", true);
             saveResource("songs/Cat_s In the Cradle.nbs", true);
             saveResource("songs/Dynamite.nbs", true);
