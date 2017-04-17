@@ -11,15 +11,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import simple.brainsynder.utils.ObjectPager;
 
 public class Main extends JavaPlugin {
-    public static Main plugin;
+    static Main plugin;
+    static ObjectPager<Song> songs;
     Map<Player, SongPlayer> songPlayerMap = new HashMap<>();
 
     public void onEnable() {
         plugin = this;
         Bukkit.getPluginManager().registerEvents(new GUIClickEvent(), this);
-        getCommand("music").setExecutor(new MusicGUICommand());}
+        getCommand("music").setExecutor(new MusicGUICommand());
+        songs = reloadSongs(MusicGUI.slots.size());
+    }
 
-    public ObjectPager<Song> reloadSongs(int size) {
+    ObjectPager<Song> reloadSongs(int size) {
         File folder = new File(getDataFolder().toString() + "/songs/");
         if (!folder.exists()) try {
             folder.createNewFile();
