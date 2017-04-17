@@ -23,9 +23,6 @@ public class Main extends JavaPlugin {
         songs = reloadSongs(MusicGUI.slots.size());
     }
 
-    /**
-     * This method makes sure that an infinite number of NBS songs can be added.
-     */
     public ObjectPager<Song> reloadSongs(int size) {
         File folder = new File(getDataFolder().toString() + "/songs/");
         if (!folder.exists()) folder.mkdir();
@@ -39,7 +36,7 @@ public class Main extends JavaPlugin {
                 saveResource("songs/Payphone.nbs", true);
                 saveResource("songs/Problem.nbs", true);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             saveResource("songs/Boom Clap.nbs", true);
             saveResource("songs/Cat_s In the Cradle.nbs", true);
             saveResource("songs/Dynamite.nbs", true);
@@ -50,7 +47,12 @@ public class Main extends JavaPlugin {
         ArrayList<Song> songs = new ArrayList<>();
         for (File file : folder.listFiles()) {
             if (!file.getName().endsWith("nbs")) continue;
-            songs.add(NBSDecoder.parse(file));
+            Song song = NBSDecoder.parse(file);
+            if (song == null) {
+                System.out.println("Could not load Song data for file: " + file.getName());
+                continue;
+            }
+            songs.add(song);
         }
 
         return new ObjectPager<>(size, songs);
@@ -65,17 +67,17 @@ public class Main extends JavaPlugin {
     }
 
 
-    public HashMap<String, ArrayList<modded.NoteBlockAPI.SongPlayer>> playingSongs = new HashMap<>();
+    public HashMap<String, ArrayList<SongPlayer>> playingSongs = new HashMap<>();
     public HashMap<String, Byte> playerVolume = new HashMap<>();
 
     public static boolean isReceivingSong(Player p) {
-        return plugin.playingSongs.get(p.getName()) != null && !((ArrayList)plugin.playingSongs.get(p.getName())).isEmpty();
+        return plugin.playingSongs.get(p.getName()) != null && !((ArrayList) plugin.playingSongs.get(p.getName())).isEmpty();
     }
 
     public static void stopPlaying(Player p) {
-        if(plugin.playingSongs.get(p.getName()) != null) {
+        if (plugin.playingSongs.get(p.getName()) != null) {
 
-            for (modded.NoteBlockAPI.SongPlayer s : (plugin.playingSongs.get(p.getName()))) {
+            for (SongPlayer s : (plugin.playingSongs.get(p.getName()))) {
                 s.removePlayer(p);
             }
 
@@ -87,9 +89,9 @@ public class Main extends JavaPlugin {
     }
 
     public static byte getPlayerVolume(Player p) {
-        Byte b = (Byte)plugin.playerVolume.get(p.getName());
-        if(b == null) {
-            b = (byte)100;
+        Byte b = (Byte) plugin.playerVolume.get(p.getName());
+        if (b == null) {
+            b = (byte) 100;
             plugin.playerVolume.put(p.getName(), b);
         }
 

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.*;
 import simple.brainsynder.api.ItemMaker;
+import simple.brainsynder.math.MathUtils;
 
 import java.util.*;
 
@@ -53,17 +54,26 @@ class MusicGUI implements Listener {
                 inv.addItem(error.create());
                 continue;
             }
-            ItemMaker maker = new ItemMaker(Material.GOLD_RECORD);
+            ItemMaker maker = new ItemMaker(getRandomRecord ());
             try {
-                maker.setName(song.getTitle());
+                maker.setName("&7&l" + song.getTitle());
             }catch (Exception e) {
                 try {
-                    maker.setName(song.getPath().getName().replace(".nbs", "").replace(".NBS", ""));
+                    maker.setName("&7&l" + song.getPath().getName().replace(".nbs", "").replace(".NBS", ""));
                 }catch (Exception ex) {
-                    maker.setName("Missing Song Name");
+                    maker.setName("&c&lMissing Song Name");
                 }
             }
-            maker.addLoreLine("Length: " + song.getLength() + " seconds");
+            int seconds = (song.getLength()/20);
+            int hours = seconds / 3600;
+            int minutes = (seconds % 3600) / 60;
+
+            maker.addLoreLine("&aSong Duration&8:");
+            if (hours > 0)
+            maker.addLoreLine("&aHour(s)&8: &3" + hours);
+            if (minutes > 0)
+            maker.addLoreLine("&aMinute(s)&8: &3" + minutes);
+            maker.addLoreLine("&aSecond(s)&8: &3" + seconds);
             maker.setFlags(
                     ItemFlag.HIDE_ATTRIBUTES,
                     ItemFlag.HIDE_DESTROYS,
@@ -80,6 +90,23 @@ class MusicGUI implements Listener {
         playerSongMap.put(player.getUniqueId(), songMap);
         inv.setItem(49, Main.plugin.getStopItem());
         player.openInventory(inv);
+    }
+
+    private static Material getRandomRecord () {
+        int rand = MathUtils.random(0, 11);
+        if (rand == 0) return Material.GOLD_RECORD;
+        if (rand == 1) return Material.GREEN_RECORD;
+        if (rand == 2) return Material.RECORD_3;
+        if (rand == 3) return Material.RECORD_4;
+        if (rand == 4) return Material.RECORD_5;
+        if (rand == 5) return Material.RECORD_6;
+        if (rand == 6) return Material.RECORD_7;
+        if (rand == 7) return Material.RECORD_8;
+        if (rand == 8) return Material.RECORD_9;
+        if (rand == 9) return Material.RECORD_10;
+        if (rand == 10) return Material.RECORD_11;
+        if (rand == 11) return Material.RECORD_12;
+        return Material.GOLD_RECORD;
     }
 }
 

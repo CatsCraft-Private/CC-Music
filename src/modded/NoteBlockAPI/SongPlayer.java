@@ -7,6 +7,7 @@ import java.util.List;
 import bobcatsss.music.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import simple.brainsynder.utils.Reflection;
 
 @SuppressWarnings("ALL")
 public abstract class SongPlayer {
@@ -91,12 +92,34 @@ public abstract class SongPlayer {
                         if(SongPlayer.this.playing) {
                             SongPlayer.this.calculateFade();
                             ++SongPlayer.this.tick;
+                            int time = SongPlayer.this.tick;
+                            int seconds = (time/20);
+                            int hours = seconds / 3600;
+                            int minutes = (seconds % 3600) / 60;
+                            StringBuilder builder = new StringBuilder();
+                            if (hours > 0)
+                                builder.append(hours + ":");
+                            if (minutes > 0)
+                                builder.append(minutes + ":");
+                            builder.append(seconds);
+                            for (String s : SongPlayer.this.playerList) {
+                                Player p = Bukkit.getPlayerExact(s);
+                                if (p != null) {
+                                    Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Time Elasped: §7" + builder.toString());
+                                }
+                            }
                             if(SongPlayer.this.tick > SongPlayer.this.song.getLength()) {
                                 SongPlayer.this.playing = false;
                                 SongPlayer.this.tick = -1;
                                 SongEndEvent event = new SongEndEvent(SongPlayer.this);
                                 Bukkit.getPluginManager().callEvent(event);
                                 if(SongPlayer.this.autoDestroy) {
+                                    for (String s : SongPlayer.this.playerList) {
+                                        Player p = Bukkit.getPlayerExact(s);
+                                        if (p != null) {
+                                            Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Song has ended");
+                                        }
+                                    }
                                     SongPlayer.this.destroy();
                                     return;
                                 }
