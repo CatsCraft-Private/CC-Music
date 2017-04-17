@@ -1,0 +1,7 @@
+name: Music
+author: bobcatsss
+version: 1.0
+main: bobcatsss.music.Main
+commands:
+   music:
+      description: Play music
