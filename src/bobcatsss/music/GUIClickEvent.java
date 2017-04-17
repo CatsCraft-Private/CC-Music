@@ -12,10 +12,9 @@ class GUIClickEvent implements Listener {
 
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
-
 		Player p = (Player) e.getWhoClicked();
 
-		if (e.getInventory().getTitle().equals(MusicGUI.getInventory().getTitle())) {
+		if (e.getInventory().getTitle().equals(MusicGUI.open().getTitle())) {
 			if (e.isShiftClick()) {
 				e.setCancelled(true);
 			}
