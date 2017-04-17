@@ -65,15 +65,7 @@ class MusicGUI implements Listener {
                 }
             }
             int seconds = (song.getLength()/20);
-            int hours = seconds / 3600;
-            int minutes = (seconds % 3600) / 60;
-
-            maker.addLoreLine("&aSong Duration&8:");
-            if (hours > 0)
-            maker.addLoreLine("&aHour(s)&8: &3" + hours);
-            if (minutes > 0)
-            maker.addLoreLine("&aMinute(s)&8: &3" + minutes);
-            maker.addLoreLine("&aSecond(s)&8: &3" + seconds);
+            maker.addLoreLine("&aDuration&8: " + formatHHMMSS(seconds));
             maker.setFlags(
                     ItemFlag.HIDE_ATTRIBUTES,
                     ItemFlag.HIDE_DESTROYS,
@@ -90,6 +82,22 @@ class MusicGUI implements Listener {
         playerSongMap.put(player.getUniqueId(), songMap);
         inv.setItem(49, Main.plugin.getStopItem());
         player.openInventory(inv);
+    }
+
+    private static String formatHHMMSS(long secondsCount){
+        int seconds = (int) (secondsCount %60);
+        secondsCount -= seconds;
+        long minutesCount = secondsCount / 60;
+        long minutes = minutesCount % 60;
+        minutesCount -= minutes;
+        long hoursCount = minutesCount / 60;
+        StringBuilder builder = new StringBuilder();
+        if (hoursCount > 0)
+            builder.append(hoursCount).append(":");
+        if (minutes > 0)
+            builder.append(minutes).append(":");
+        builder.append((seconds < 10) ? "0" + seconds : seconds);
+        return builder.toString();
     }
 
     private static Material getRandomRecord () {

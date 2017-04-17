@@ -82,6 +82,22 @@ public abstract class SongPlayer {
         }
     }
 
+    private String formatHHMMSS(long secondsCount){
+        int seconds = (int) (secondsCount %60);
+        secondsCount -= seconds;
+        long minutesCount = secondsCount / 60;
+        long minutes = minutesCount % 60;
+        minutesCount -= minutes;
+        long hoursCount = minutesCount / 60;
+        StringBuilder builder = new StringBuilder();
+        if (hoursCount > 0)
+            builder.append(hoursCount + ":");
+        if (minutes > 0)
+            builder.append(minutes + ":");
+        builder.append((seconds < 10) ? "0" + seconds : seconds);
+        return builder.toString();
+    }
+
     protected void createThread() {
         this.playerThread = new Thread(new Runnable() {
             public void run() {
@@ -96,16 +112,10 @@ public abstract class SongPlayer {
                             int seconds = (time/20);
                             int hours = seconds / 3600;
                             int minutes = (seconds % 3600) / 60;
-                            StringBuilder builder = new StringBuilder();
-                            if (hours > 0)
-                                builder.append(hours + ":");
-                            if (minutes > 0)
-                                builder.append(minutes + ":");
-                            builder.append(seconds);
                             for (String s : SongPlayer.this.playerList) {
                                 Player p = Bukkit.getPlayerExact(s);
                                 if (p != null) {
-                                    Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Time Elasped: §7" + builder.toString());
+                                    Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Time Elasped: §7" + formatHHMMSS(seconds));
                                 }
                             }
                             if(SongPlayer.this.tick > SongPlayer.this.song.getLength()) {
