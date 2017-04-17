@@ -1,9 +1,6 @@
 package modded.NoteBlockAPI;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import bobcatsss.music.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -50,9 +47,9 @@ public abstract class SongPlayer {
         long hoursCount = minutesCount / 60;
         StringBuilder builder = new StringBuilder();
         if (hoursCount > 0)
-            builder.append(hoursCount + ":");
+            builder.append(hoursCount).append(":");
         if (minutes > 0)
-            builder.append(minutes + ":");
+            builder.append(minutes).append(":");
         builder.append((seconds < 10) ? "0" + seconds : seconds);
         return builder.toString();
     }
@@ -134,10 +131,6 @@ public abstract class SongPlayer {
         this.setTick((short) -1);
     }
 
-    public void setPlaying(boolean playing) {
-        this.playing = playing;
-    }
-
     public void setTick(short tick) {
         this.tick = tick;
     }
@@ -153,7 +146,7 @@ public abstract class SongPlayer {
             }
         }
     }
-    
+
     public void setVolume(byte volume) {
         this.volume = volume;
     }

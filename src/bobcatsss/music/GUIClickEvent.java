@@ -80,7 +80,7 @@ public class GUIClickEvent implements Listener {
                 SongPlayer player = new RadioSongPlayer(song);
                 p.sendMessage("§8[§aMusic§8] §3Now Playing: §7" + song.getTitle());
                 player.addPlayer(p);
-                player.setPlaying(true);
+                player.setPlaying();
                 player.setAutoDestroy(true);
                 Main.plugin.songPlayerMap.put(p.getUniqueId(), player);
             }
