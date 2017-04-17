@@ -17,7 +17,7 @@ public class Main extends JavaPlugin {
 
     public void onEnable() {
         plugin = this;
-        Bukkit.getPluginManager().registerEvents(new GUIClickEvent(), this);
+        getServer().getPluginManager().registerEvents(new GUIClickEvent(), this);
         getCommand("music").setExecutor(new MusicGUICommand());
         songs = reloadSongs(MusicGUI.slots.size());
     }
