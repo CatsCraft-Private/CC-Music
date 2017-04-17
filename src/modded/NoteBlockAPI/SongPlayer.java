@@ -9,13 +9,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import simple.brainsynder.utils.Reflection;
 
-@SuppressWarnings("ALL")
 public abstract class SongPlayer {
     protected Song song;
     protected boolean playing = false;
     protected short tick = -1;
     protected ArrayList<String> playerList = new ArrayList<>();
-    protected boolean autoDestroy = false;
+    protected boolean autoDestroy = true;
     protected boolean destroyed = false;
     protected Thread playerThread;
     protected byte fadeTarget = 100;
@@ -24,46 +23,6 @@ public abstract class SongPlayer {
     protected int fadeDuration;
     protected int fadeDone;
     protected FadeType fadeType;
-
-    public FadeType getFadeType() {
-        return this.fadeType;
-    }
-
-    public void setFadeType(FadeType fadeType) {
-        this.fadeType = fadeType;
-    }
-
-    public byte getFadeTarget() {
-        return this.fadeTarget;
-    }
-
-    public void setFadeTarget(byte fadeTarget) {
-        this.fadeTarget = fadeTarget;
-    }
-
-    public byte getFadeStart() {
-        return this.fadeStart;
-    }
-
-    public void setFadeStart(byte fadeStart) {
-        this.fadeStart = fadeStart;
-    }
-
-    public int getFadeDuration() {
-        return this.fadeDuration;
-    }
-
-    public void setFadeDuration(int fadeDuration) {
-        this.fadeDuration = fadeDuration;
-    }
-
-    public int getFadeDone() {
-        return this.fadeDone;
-    }
-
-    public void setFadeDone(int fadeDone) {
-        this.fadeDone = fadeDone;
-    }
 
     public SongPlayer(Song song) {
         this.fadeStart = this.volume;
@@ -101,25 +60,22 @@ public abstract class SongPlayer {
     protected void createThread() {
         this.playerThread = new Thread(new Runnable() {
             public void run() {
-                while (!SongPlayer.this.destroyed) {
+                while (!destroyed) {
                     long startTime = System.currentTimeMillis();
-                    SongPlayer var3 = SongPlayer.this;
-                    if (SongPlayer.this.playing) {
-                        SongPlayer.this.calculateFade();
-                        ++SongPlayer.this.tick;
-                        int time = SongPlayer.this.tick;
+                    if (playing) {
+                        calculateFade();
+                        ++tick;
+                        int time = tick;
                         int seconds = (time / 20);
-                        int hours = seconds / 3600;
-                        int minutes = (seconds % 3600) / 60;
-                        for (String s : SongPlayer.this.playerList) {
+                        for (String s : playerList) {
                             Player p = Bukkit.getPlayerExact(s);
                             if (p != null) {
                                 Reflection.getActionMessage().sendMessage(p, "§8[§aMusic§8] §3Time Elasped: §7" + formatHHMMSS(seconds));
                             }
                         }
-                        if (SongPlayer.this.tick > SongPlayer.this.song.getLength()) {
-                            SongPlayer.this.playing = false;
-                            SongPlayer.this.tick = -1;
+                        if (tick > song.getLength()) {
+                            playing = false;
+                            tick = -1;
                             for (String s : SongPlayer.this.playerList) {
                                 Player p = Bukkit.getPlayerExact(s);
                                 if (p != null) {
@@ -135,14 +91,14 @@ public abstract class SongPlayer {
                         for (String s : SongPlayer.this.playerList) {
                             Player p = Bukkit.getPlayerExact(s);
                             if (p != null) {
-                                SongPlayer.this.playTick(p, SongPlayer.this.tick);
+                                SongPlayer.this.playTick(p, tick);
                             }
                         }
                     }
 
 
                     long duration = System.currentTimeMillis() - startTime;
-                    int delayMillis = SongPlayer.this.song.getDelay() * 50;
+                    int delayMillis = song.getDelay() * 50;
                     if (duration < (long) delayMillis) {
                         try {
                             Thread.sleep((long) delayMillis - duration);
@@ -155,10 +111,6 @@ public abstract class SongPlayer {
         });
         this.playerThread.setPriority(10);
         this.playerThread.start();
-    }
-
-    public List<String> getPlayerList() {
-        return Collections.unmodifiableList(this.playerList);
     }
 
     public void addPlayer(Player p) {
@@ -174,14 +126,6 @@ public abstract class SongPlayer {
         }
     }
 
-    public void setAutoDestroy(boolean value) {
-        this.autoDestroy = value;
-    }
-
-    public boolean getAutoDestroy() {
-        return this.autoDestroy;
-    }
-
     public abstract void playTick(Player var1, int var2);
 
     public void destroy() {
@@ -190,16 +134,8 @@ public abstract class SongPlayer {
         this.setTick((short) -1);
     }
 
-    public boolean isPlaying() {
-        return this.playing;
-    }
-
     public void setPlaying(boolean playing) {
         this.playing = playing;
-    }
-
-    public short getTick() {
-        return this.tick;
     }
 
     public void setTick(short tick) {
@@ -217,16 +153,8 @@ public abstract class SongPlayer {
             }
         }
     }
-
-    public byte getVolume() {
-        return this.volume;
-    }
-
+    
     public void setVolume(byte volume) {
         this.volume = volume;
-    }
-
-    public Song getSong() {
-        return this.song;
     }
 }
