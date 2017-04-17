@@ -28,12 +28,18 @@ public class Main extends JavaPlugin {
      */
     public ObjectPager<Song> reloadSongs(int size) {
         File folder = new File(getDataFolder().toString() + "/songs/");
-        if (!folder.exists()) try {
-            folder.createNewFile();
-        } catch (IOException ignored) {
-        }
-        File[] files = folder.listFiles();
-        if (files.length == 0) {
+        if (!folder.exists()) folder.mkdir();
+        if (!folder.isDirectory()) folder.mkdir();
+        try {
+            if (folder.listFiles().length == 0) {
+                saveResource("songs/Boom Clap.nbs", true);
+                saveResource("songs/Cat_s In the Cradle.nbs", true);
+                saveResource("songs/Dynamite.nbs", true);
+                saveResource("songs/GangnamStyle.nbs", true);
+                saveResource("songs/Payphone.nbs", true);
+                saveResource("songs/Problem.nbs", true);
+            }
+        }catch (Exception e){
             saveResource("songs/Boom Clap.nbs", true);
             saveResource("songs/Cat_s In the Cradle.nbs", true);
             saveResource("songs/Dynamite.nbs", true);
@@ -41,10 +47,8 @@ public class Main extends JavaPlugin {
             saveResource("songs/Payphone.nbs", true);
             saveResource("songs/Problem.nbs", true);
         }
-
         ArrayList<Song> songs = new ArrayList<>();
-        assert files != null;
-        for (File file : files) {
+        for (File file : folder.listFiles()) {
             if (!file.getName().endsWith("nbs")) continue;
             songs.add(NBSDecoder.parse(file));
         }
