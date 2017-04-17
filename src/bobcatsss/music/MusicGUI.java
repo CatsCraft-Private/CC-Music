@@ -53,9 +53,11 @@ class MusicGUI implements Listener {
             maker.setName(song.getTitle());
             ItemStack item = maker.create();
             songMap.put(item, song);
+            inv.addItem(item);
         }
 
         inv.setItem(49, Main.plugin.getStopItem());
+        player.openInventory(inv);
     }
 }
 
