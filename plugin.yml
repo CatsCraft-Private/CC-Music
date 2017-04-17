@@ -1,5 +1,5 @@
 name: Music
-author: bobcatsss
+authors: [brainsynder, bobcatsss]
 version: 1.0
 main: bobcatsss.music.Main
 commands:
