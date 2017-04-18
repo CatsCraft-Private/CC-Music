@@ -44,7 +44,6 @@ public class GUIClickEvent implements Listener {
                     Main.plugin.songPlayerMap.get(p.getUniqueId()).destroy();
 					Main.plugin.songPlayerMap.remove(p.getUniqueId());
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8[&aMusic&8] &3Music has been stopped"));
-					p.closeInventory();
 					return;
 				}
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&',"&8[&aMusic&8] &3You're not playing any Music right now"));
@@ -80,6 +79,7 @@ public class GUIClickEvent implements Listener {
                 SongPlayer player = new RadioSongPlayer(song);
                 p.sendMessage("§8[§aMusic§8] §3Now Playing: §7" + song.getTitle());
                 player.addPlayer(p);
+                player.setPlaying(true);
                 Main.plugin.songPlayerMap.put(p.getUniqueId(), player);
             }
 		}

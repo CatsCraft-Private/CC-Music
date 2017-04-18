@@ -71,7 +71,7 @@ public class Main extends JavaPlugin {
     public HashMap<String, Byte> playerVolume = new HashMap<>();
 
     public static boolean isReceivingSong(Player p) {
-        return plugin.playingSongs.get(p.getName()) != null && !((ArrayList) plugin.playingSongs.get(p.getName())).isEmpty();
+        return plugin.playingSongs.get(p.getName()) != null && !plugin.playingSongs.get(p.getName()).isEmpty();
     }
 
     public static void stopPlaying(Player p) {
@@ -89,7 +89,7 @@ public class Main extends JavaPlugin {
     }
 
     public static byte getPlayerVolume(Player p) {
-        Byte b = (Byte) plugin.playerVolume.get(p.getName());
+        Byte b = plugin.playerVolume.get(p.getName());
         if (b == null) {
             b = (byte) 100;
             plugin.playerVolume.put(p.getName(), b);
