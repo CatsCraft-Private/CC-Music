@@ -59,19 +59,12 @@ public class Main extends JavaPlugin {
         return new ObjectPager<>(size, songs);
     }
 
-    public ItemStack getStopItem(String current) {
+    public ItemStack getStopItem() {
         ItemMaker maker = new ItemMaker(Material.BARRIER);
         maker.setName("&8[&cStop Music&8]");
-        if (current != null) {
-            maker.addLoreLine("Currently Playing:");
-            maker.addLoreLine(current);
-        }
         return maker.create();
     }
 
-    public ItemStack getStopItem() {
-        return getStopItem(null);
-    }
 
 
     public HashMap<String, ArrayList<SongPlayer>> playingSongs = new HashMap<>();
