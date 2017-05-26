@@ -7,7 +7,7 @@ import simple.brainsynder.utils.ServerVersion;
 public class Instrument {
     public Instrument() {
     }
-    
+     
     public static Sound getInstrument(byte instrument) {
         SoundMaker soundName;
         switch (instrument) {
