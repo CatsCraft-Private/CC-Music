@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="SimpleAPI">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Desktop/Java SCR Code/,outut/SimpleAPI.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/SimpleAPI.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

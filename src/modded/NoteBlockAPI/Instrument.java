@@ -19,7 +19,7 @@ public class Instrument {
                 break;
             case 2:
                 soundName = SoundMaker.BLOCK_NOTE_BASEDRUM;//Sound.NOTE_BASS_DRUM;
-                break; 
+                break;
             case 3:
                 soundName = SoundMaker.BLOCK_NOTE_SNARE;//Sound.NOTE_SNARE_DRUM;
                 break;
